@@ -64,7 +64,7 @@ services:
           memory: "0.5GB"
 
   nginx:
-    image: nginx:1.25.1-alpine
+    image: openbridge/nginx:latest
     hostname: api
     volumes:
       - ./config/nginx.conf:/etc/nginx/nginx.conf:ro

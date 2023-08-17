@@ -1,16 +1,17 @@
 from sqlalchemy.orm import Session
-from sqlalchemy.ext.serializer import loads, dumps
-
+import uuid
 import models, schemas
 
 
 def get_pessoa(db: Session, id: str):
+    print(f"Procurou no banco o id {id}")
     return db.query(models.Pessoa).filter(models.Pessoa.id == id).first()
 
-def get_pessoa_by_apelido(db: Session, apelido: str):
+def get_pessoa_by_apelido(db: Session, apelido: uuid.UUID):
     return db.query(models.Pessoa).filter(models.Pessoa.apelido == apelido).first()
 
-def search_pessoas(db: Session, skip: int = 0, limit: int = 50):
+def search_pessoas(db: Session, t: str, skip: int = 0, limit: int = 50):
+    print(f"TODO: Procurou no banco todas as pessoas com a query {t}")
     return db.query(models.Pessoa).limit(limit).all()
   
 def count_pessoas(db: Session):
