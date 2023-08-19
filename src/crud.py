@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session
+from sqlalchemy import or_
 import uuid
 import models, schemas
 
@@ -12,7 +13,10 @@ def get_pessoa_by_apelido(db: Session, apelido: uuid.UUID):
 
 def search_pessoas(db: Session, t: str, skip: int = 0, limit: int = 50):
     print(f"TODO: Procurou no banco todas as pessoas com a query {t}")
-    return db.query(models.Pessoa).limit(limit).all()
+    search = "%{}%".format(t)
+    return db.query(models.Pessoa).filter(or_(models.Pessoa.apelido.like(search),
+                                              models.Pessoa.nome.like(search),
+                                              models.Pessoa.stack.like(search))).limit(limit).all()
   
 def count_pessoas(db: Session):
   return db.query(models.Pessoa).count()
